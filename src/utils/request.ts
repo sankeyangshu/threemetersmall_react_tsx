@@ -3,11 +3,12 @@
  * @Author: 王振
  * @Date: 2021-08-26 10:18:23
  * @LastEditors: 王振
- * @LastEditTime: 2021-08-26 10:19:24
+ * @LastEditTime: 2021-08-26 10:52:50
  */
 
 // 导入axios
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { message } from 'antd';
 
 // 1. 创建新的axios实例
 const instance = axios.create({
@@ -31,11 +32,7 @@ instance.interceptors.request.use(
     //   config.headers["Authorization"] = `Bearer ${token}`;
     // }
     // 设置loading
-    // Toast.loading({
-    //   message: "加载中...",
-    //   duration: 0, //一直存在
-    //   forbidClick: true, //禁止点击
-    // });
+    message.loading('加载中...', 0);
     // 数据转换,判断数据格式为formdata还是json格式
     // json格式
     config.data = JSON.stringify(config.data);
@@ -43,10 +40,9 @@ instance.interceptors.request.use(
   },
   (error) => {
     // 出现请求错误，清除toast
-    // Toast.clear();
-    // Toast("请求错误，请稍后重试");
-    console.info('error: ');
-    console.info(error);
+    message.destroy();
+    message.warning('请求错误，请稍后重试');
+    console.info('error: ' + error);
     return Promise.reject(error);
   }
 );
@@ -57,25 +53,25 @@ instance.interceptors.response.use(
     const { status, data } = response;
     if (status === 200) {
       // 接口网络请求成功，关闭等待提示
-      // Toast.clear();
+      message.destroy();
       if (data.code === 0) {
         // 接口请求结果正确
         return data;
       } else {
-        // Toast(data.message);
+        message.error(data.message);
         return Promise.reject(data);
       }
     }
   },
   (error: AxiosError) => {
     // 响应失败，关闭等待提示
-    // Toast.clear();
+    message.destroy();
     // // 超时处理
-    // if (JSON.stringify(error).includes("Network Error")) {
-    //   Toast.fail("网络超时");
-    // } else {
-    //   Toast.fail("服务器连接失败");
-    // }
+    if (JSON.stringify(error).includes('Network Error')) {
+      message.error('网络超时');
+    } else {
+      message.error('服务器连接失败');
+    }
     console.info(error);
     return Promise.reject(error);
   }
