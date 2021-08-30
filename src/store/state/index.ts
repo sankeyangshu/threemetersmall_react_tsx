@@ -3,10 +3,10 @@
  * @Author: 王振
  * @Date: 2021-08-26 15:58:05
  * @LastEditors: 王振
- * @LastEditTime: 2021-08-26 15:59:23
+ * @LastEditTime: 2021-08-30 09:46:34
  */
 
-interface StoreState {
+export interface StoreState {
   userInfo: {
     userName: string;
     permission: string[];
@@ -18,7 +18,7 @@ interface StoreState {
   reloadPath: string;
 }
 
-const initState: StoreState = {
+export const initState: StoreState = {
   userInfo: {
     userName: '',
     permission: [],
@@ -29,5 +29,3 @@ const initState: StoreState = {
   theme: '', // 网站主题
   reloadPath: 'null', // 需要刷新的tab路径
 };
-
-export default initState;

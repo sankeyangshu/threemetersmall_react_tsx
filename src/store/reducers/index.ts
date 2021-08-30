@@ -3,10 +3,10 @@
  * @Author: 王振
  * @Date: 2021-08-26 15:34:33
  * @LastEditors: 王振
- * @LastEditTime: 2021-08-26 16:04:54
+ * @LastEditTime: 2021-08-30 09:14:27
  */
 
-import initState from '../state';
+import { initState } from '../state';
 import actionTypes from '../actionTypes';
 
 interface StoreAction {
